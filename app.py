@@ -57,3 +57,14 @@ def add_entry():
 	flash('New entry was successfully posted')
 	return redirect(url_for('show_entries'))
 
+if __name__ == '__main__':
+	app.run(debug=True)
+	url_for('static', filename='geotiles/pueblos.json')
+	url_for('static', filename='geotiles/barrios.json')
+	url_for('static', filename='geotiles/barrios+isla.json')
+	url_for('static', filename='geotiles/barrios+isla+pueblos.json')
+	url_for('static', filename='geotiles/barrios+pueblos.json')
+	url_for('static', filename='geotiles/isla.json')
+	url_for('static', filename='geotiles/isla+pueblos.json')
+	url_for('static', filename='geotiles/pueblos.json')
+	url_for('static', filename='geotiles/puertorico-geo.json')
