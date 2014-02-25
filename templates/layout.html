@@ -17,11 +17,18 @@
 
 	        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
 	        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+	        <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.gridster.min.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/orgullopr.css') }}">
+
 	        <script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2.min.js') }}"></script>
+
 		    <script src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
+		    <script src="{{ url_for('static', filename='js/vendor/jquery.gridster.min.js') }}"></script>
+
 		    <script src="{{ url_for('static', filename='js/vendor/d3.js') }}"></script>
 		    <script src="{{ url_for('static', filename='js/vendor/klass.js') }}"></script>
 		    <script src="{{ url_for('static', filename='js/vendor/atlaspr.js') }}"></script>
+
 		    <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
 		    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 		{% endblock %}
@@ -30,9 +37,24 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <header>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#" ><span class="menu-text">SOBRE</span></a></li>
+                    <li><a href="#"><span class="menu-text">ENVIANOS TU HISTORIA</span></a></li>
+                    <li><a href="#"><span class="menu-text">EXPLORA</span></a></li>
+                </ul>
 
+            </nav>
+        </header>
 		<div id="content"> {% block content %}{% endblock %} </div>
-		<div id="footer"> {% block footer %}{% endblock %} </div>
+		<footer>
+            <ul class="footer-links">
+                <li><a href="#">ABOUT</a></li>
+                <li><a href="#">CONTACT</a></li>
+                <li><a href="#">PRESS</a></li>
+            </ul>
+		</footer>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

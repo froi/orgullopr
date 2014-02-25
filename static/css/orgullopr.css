@@ -1,0 +1,97 @@
+body {
+    background-color: rgba(93,195,243,1);
+}
+footer {
+    background-color: rgba(207,207,207,1);
+    margin: 0;
+}
+ul.nav-menu, ul.footer-links {
+
+    height: 3.5em;
+    padding: 0;
+    margin: 0;
+}
+ul.nav-menu li {
+    float: right;
+    margin: 0 10px;
+    text-align: center;
+    height: 100%;
+    display: inline-table;
+}
+ul.nav-menu li a {
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    text-decoration: none;
+}
+
+ul.footer-links {
+    text-align: center;
+}
+ul.footer-links li{
+    display: inline-table;
+    margin: 0 10px;
+    text-align: center;
+    height: 100%;
+}
+ul.footer-links li a {
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    text-decoration: none;
+    color: rgba(158,158,158,1);
+}
+
+.menu-text {
+    color: #ffffff;
+}
+.content-wrapper {
+    width: 100%;
+}
+.map-wrapper {
+    background-color: rgba(72,91,210,1);
+}
+.text-wrapper {
+    background-color: rgba(247,247,247,1);
+    height: 20em;
+    width: 100%;
+}
+.text-wrapper div{
+    vertical-align: middle;
+    float: left;
+    height: 100%;
+    width: 50%;
+}
+.question {
+    margin: 0 auto;
+    /*display: table;*/
+    text-align: center;
+
+}
+.question h1 {
+    /*display: table-cell;*/
+    /*vertical-align: middle;*/
+}
+.question p {
+    margin: 0 auto;
+    text-align: left;
+    padding: 0 2em;
+}
+.about li {
+    padding-right: 2em;
+}
+#map {
+    /*background-image: url('/static/img/PR_Draft_PR_Map.png');*/
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 0 auto;
+    width: 100%;
+    height: 500px;
+    padding-top: 2em;
+}
+
+#map h1 {
+    color: rgba(253,249,94,1);
+    font-size: 3em;
+}

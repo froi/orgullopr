@@ -4,7 +4,6 @@ var AtlasPR = klass(function (options) {
   this.main_tile = this.tiles[0];
   this.options.events = options.events || {};
   //hack to make github pages work
-  //this.geotiles_path = this.options.geotiles_path;
   this.geotiles_path = (document.URL.indexOf("github") > 0 ? "http://froi.github.io/puertorico-map-mvp" : ".") + '/static/geotiles/PATHGEN.json';
   this.center_ll = [-66.251367,18.20033];
   this.colors = d3.scale.category20c();
@@ -69,7 +68,8 @@ var AtlasPR = klass(function (options) {
       self.indexed_data = {};
 
       self.tiles.forEach(function(tile){
-        var width = self.meta_attributes[tile].width;
+        var width = self.options['stroke-width'] || self.meta_attributes[tile].width;
+        var mouseOverStrokeWidth = self.options['mouseover-stroke-width'] || 3;
         var tiletype = self.meta_attributes[tile].id;
         self.indexed_data[tile] = {};
 
@@ -88,12 +88,26 @@ var AtlasPR = klass(function (options) {
                 }
                 return d.properties.NAME})
               .style("stroke-width", width)
-              .style("fill", "rgba(255,255,255,0)")
-              .style("stroke", "#333")
+              .style("fill", self.options['background-color'] || "rgba(255,255,255,0)")
+              .style("stroke", self.options['stroke-color'] || "#333")
               .on("click",self.options.events.on_click)
               .on("mouseover", function(d){
-                d3.select(this).style("stroke-width", 3);
+                d3.select(this).style("stroke-width", mouseOverStrokeWidth);
                 self.options.events.on_mouseover && self.options.events.on_mouseover(d,this);
+
+//                TODO: trying to get the label of just the mouseovered city to show
+//                self.options['mouseover-labels'] && self.svg.select(this)
+//                  .data(data.pueblos.features)
+//                  .enter()
+//                    .append("text")
+//                    .attr("transform", function(d) { return "translate(" + self.path_fn.centroid(d) + ")"; })
+//                    .attr("dy", ".35em")
+//                    .attr("class", "labels-pueblo")
+//                    .text(function(d) {return d.properties.NAME; })
+//                    .style("fill", "#555")
+//                    .style("fill-opacity", 0.5)
+//                    .style("font-size", 12)
+//                    .style("text-anchor", "middle");
               })
               .on("mouseout", function(d){
                 d3.select(this).style("stroke-width", width);

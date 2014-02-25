@@ -5,10 +5,38 @@
 	<!-- any local css/styling should be put here -->
 {% endblock %}
 {% block content %}
-	<div class="wrapper">
-		<div id="map"></div>
+    <div class="content-wrapper" xmlns="http://www.w3.org/1999/html">
+        <div class="map-wrapper">
+            <div id="map">
+                <h1>PUERTO RICO</h1>
+            </div>
+        </div>
+        <div class="text-wrapper">
+            <div class="question">
+                <h1>&iquest;Qu&eacute es OrgulloPR&quest;</h1>
+                <p>Orgullo PR es un proyecto para resaltar lo bueno de todo Puerto Rico. La diferencia es que aqui <strong>TU</strong> eres el que nos dice que es el Orgullo de Puerto Rico.</p>
+            </div>
+            <div class="about">
+                <h1>Envianos tu historia</h1>
+
+                <p>Guia de preguntas: por favor contesta las siguientes peguntas</p>
+                <ul>
+                <li> Cual es tu nombre? </li>
+                <li> Que haces? </li>
+                <li> Donde vives?</li>
+                <li> Que te enorgullece de tu lugar de residencia? </li>
+                <li> Que haces para que [tu lugar de residencia] se sienta orgulloso de ti? </li>
+                <li> Recuerdas alguna iniciativa de gobierno, local o nacional, pasada o presente que te haya enorgullecido? </li>
+                </ul>
+            </div>
+        </div>
+        <div class="button-wrapper">
+
+        </div>
 	</div>
+
   	<script type = 'text/javascript'>
+    	orgullopr.init();
     	mapOperator.init();
   	</script>
 {% endblock %}
