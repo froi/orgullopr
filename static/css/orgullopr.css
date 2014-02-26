@@ -71,6 +71,8 @@ ul.footer-links li:hover{
 .menu-text {
     color: #ffffff;
 }
+
+/* index.html start*/
 .content-wrapper {
     width: 100%;
 }
@@ -128,3 +130,43 @@ ul.footer-links li:hover{
     /*background-image: url('/static/img/PR_Draft_PR_Map.png');*/
     background-size: auto;
 }
+
+/* index.html end */
+
+/* videos.html start */
+.videos-content {
+    background-color: rgba(246,246,246,1);
+    height: 100%;
+    width: 100%;
+}
+
+.video-header {
+    font-family: 'Copriola', sans-serif;
+    font-weight: 600;
+    color: rgba(246,246,246,1);
+    height: 1.5em;
+    background-color: rgba(72,91,210,1);
+    /*margin: 3px 0;*/
+    padding: 3px 0;
+}
+.town-name {
+    margin: 1.5em 2.5em;
+}
+/*.tiles {*/
+    /*margin: 1em 3em 1em 3em;*/
+
+/*}*/
+
+.video-container {
+    margin: 1.5em auto;
+    width: 90%;
+    text-align: center;
+}
+
+.items {
+    width: 8em;
+    margin: 0 auto;
+    float: left;
+}
+
+/* videos.html end */

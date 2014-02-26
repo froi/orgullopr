@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block title %}Orgullo Map{% endblock %}
+{% block head %}
+	{{ super() }}
+	<!-- any local css/styling should be put here -->
+{% endblock %}
+{% block content %}
+
+    <div class="videos-content">
+        <div class="video-header">
+            <span class="town-name">{{ municipio }}</span>
+        </div>
+        <div class="video-container">
+            {% for video in videos %}
+                <div class="item">
+                    <iframe width="200" height="100" src="{{ video.youtube_link }}" frameborder="0" allowfullscreen></iframe>
+                    <div class="video-name"> {{ video.name }} </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+
+        orgullopr.init();
+
+        $('document').ready(function(){
+{#           $('.tiles').AwesomeGrid({#}
+{#               rowSpacing: 10,#}
+{#               colSpacing: 10,#}
+{#               item:'div',#}
+{#               columns: 4#}
+{#           });#}
+
+            var msnry = new Masonry($('.video-container')[0], {
+                itemSelector: '.item',
+                columnWidth: 240,
+                isFitWidth: true,
+                animationOptions: {
+                    duration: 400
+                },
+                containerStyle: {
+                    position: 'relative'
+                }
+            });
+        });
+
+    </script>
+{% endblock %}

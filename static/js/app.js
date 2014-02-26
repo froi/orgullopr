@@ -1,15 +1,10 @@
 var orgullopr = {
 	SCRIPT_ROOT: '',
-	gridster: {},
+//	gridster: {},
 	init: function() {
 		this.SCRIPT_ROOT = '{{ request.script_root|tojson|safe }}'; // application location
 
-		this.gridster = $('.gridster ul').gridster({
-			widget_margins: [10, 10],
-			widget_base_dimensions: [140, 140],
-			max_cols: 4,
-			min_rows: 1
-		});
+//		this.gridster = $('.tiles').tiles();
 	}
 };
 
@@ -39,7 +34,8 @@ var mapOperator = {
     },
 
     seeTownVideos: function(feature, svg_path) {
-        alert('This will come soon, but you clicked on: ' + feature.properties.NAME);
+//        alert('This will come soon, but you clicked on: ' + feature.properties.NAME);
+        window.open("/videos/" + feature.properties.NAME, "_self");
     },
     getTownVideos: function(feature, svg_path) {
     	var videos = {};

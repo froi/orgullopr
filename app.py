@@ -44,9 +44,12 @@ def get_db():
     return g.sqlite_db
 
 
-def run_query(query):
+def run_query(query, bindings=None):
     db = get_db()
-    cur = db.execute(query)
+    if bindings and len(bindings):
+        cur = db.execute(query, bindings)
+    else:
+        cur = db.execute(query)
     return cur.fetchall()
 
 
@@ -68,18 +71,18 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/videos')
+@app.route('/videos', methods=['GET'])
 def show_videos():
     return render_template('videos.html')
 
 
-@app.route('/municipios/<municipio>')
+@app.route('/videos/<municipio>', methods=['GET'])
 def get_videos(municipio):
-    tmp_list = []
-    tmp_dict = {}
-    entries = run_query('select name, youtube_link from testimonials')
+    db = get_db()
+    # cur = db.execute('select name, youtube_link from testimonials where town=?', [municipio])
+    entries = run_query('select name, youtube_link from testimonials where town=?', [municipio])
 
-    return json.dumps(entries)
+    return render_template('videos.html', videos=entries, municipio=municipio)
 
 
 @app.route('/add', methods=['POST'])
