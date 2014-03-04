@@ -1,3 +1,4 @@
+/* layout.html start */
 body {
     background-color: rgba(93,195,243,1);
     font-family: 'Capriola', serif;
@@ -5,6 +6,31 @@ body {
 footer {
     background-color: rgba(207,207,207,1);
     margin: 0;
+}
+div.tooltip {
+      color: #222;
+      background: #fff;
+      padding: .5em;
+      text-shadow: #f5f5f5 0 1px 0;
+      border-radius: 2px;
+      box-shadow: 0px 0px 2px 0px #a6a6a6;
+      visibility: hidden;
+      position: absolute;
+}
+div.video {
+    width: 100px;
+    height: 100px;
+    background-color: black;
+
+}
+.wrapper {
+    margin: 0;
+    padding: 0;
+}
+#map{
+    margin: 0 auto;
+    width: 70%;
+    text-align: center;;
 }
 .nav-sun {
     float: left;
@@ -71,6 +97,7 @@ ul.footer-links li:hover{
 .menu-text {
     color: #ffffff;
 }
+/* layout.html end */
 
 /* index.html start*/
 .content-wrapper {
@@ -81,37 +108,200 @@ ul.footer-links li:hover{
 }
 .text-wrapper {
     background-color: rgba(247,247,247,1);
-    height: 20em;
+    height: 100%;
     width: 100%;
 }
-.text-wrapper div{
+.question, .about {
     vertical-align: middle;
     float: left;
-    height: 100%;
+    /*height: 100%;*/
     width: 50%;
 }
 .question {
     margin: 0 auto;
-    /*display: table;*/
     text-align: center;
-
 }
 .question p {
-    margin: 0 auto;
+    margin: 0 auto 1em;
     text-align: left;
     padding: 0 2em;
 }
 .about li {
     padding-right: 2em;
 }
+
+.button-wrapper {
+    clear: both;
+    text-align: center;
+    width: 100%;
+}
+.btn {
+    float: none;
+    clear: both;
+    font-family: 'Capriola', sans-serif;
+    font-size: x-large;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.btn:hover {
+    cursor: pointer;
+}
+.btn > span {
+    margin: 0 auto 1em;
+    padding: 0.5em 1em;
+    display: inline-block;
+    transition: 0.25s all;
+    border-radius: 0.25em;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 1);
+    background: rgba(10, 199, 244, 1);
+}
+.btn:hover > span,
+.btn:focus > span {
+    background: rgba(140, 241, 137, 1);
+}
+.btn:active > span {
+    background: rgba(52, 207, 44, 1);
+    transition: none;
+}
+
+/* input form styles */
+:-moz-placeholder {
+    color: rgba(93,195,243,1);
+}
+::-webkit-input-placeholder {
+    color: rgba(93,195,243,1);
+}
+
+*:focus {
+    outline: none;
+}
+.form-wrapper {
+    display: none;
+    clear: both;
+}
+.input-form {
+    margin: 0 auto;
+    padding-top: 1.5em;
+    width: 60%;
+    text-align: center;
+    border-top: 1px solid rgb(173, 175, 173);
+}
+.input-form legend {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    font-size: x-large;
+}
+.input-form ul {
+    list-style-type: none;
+    list-style-position: outside;
+    margin: 0;
+    padding: 0;
+}
+.input-form li {
+    padding: 12px;
+    border-bottom: 1px solid rgba(238, 238, 238, 1);
+    position: relative;
+}
+.input-form label {
+    width: 40%;
+    margin-top: 3px;
+    display: inline-block;
+    float: left;
+    padding: 3px;
+    text-align: right;
+}
+.input-form input, .input-form select, .input-form textarea {
+    width: 40%;
+}
+.input-form input, .input-form select {
+    height: 20px;
+    padding: 5px 8px;
+}
+.input-form textarea {
+    padding: 8px;
+}
+.input-form input, .input-form textarea, .input-form select {
+    border: 1px solid rgba(170, 170, 170, 1);
+    box-shadow: 0px 0px 3px rgba(204, 204, 204, 1), 0 10px 15px rgba(234, 234, 234, 1) inset;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+.input-form input:focus, .input-form textarea:focus, .input-form select:focus {
+    background: rgba(255,255,255,1);
+    border: 1px solid rgba(84,84,84,1);
+    box-shadow: 0 0 3px rgba(170,170,170,1);
+}
+button.submit {
+    background-color: #68b12f;
+    background: -webkit-gradient(linear, left top, left bottom, from(#68b12f), to(#50911e));
+    background: -webkit-linear-gradient(top, #68b12f, #50911e);
+    background: -moz-linear-gradient(top, #68b12f, #50911e);
+    background: -ms-linear-gradient(top, #68b12f, #50911e);
+    background: -o-linear-gradient(top, #68b12f, #50911e);
+    background: linear-gradient(top, #68b12f, #50911e);
+    border: 1px solid #509111;
+    border-bottom: 1px solid #5b992b;
+    text-shadow: 0 -1px 0 #396715;
+
+    box-shadow: inset 0 1px 0 0 #9fd574;
+    -webkit-box-shadow: 0 1px 0 0 #9fd574 inset ;
+    -moz-box-shadow: 0 1px 0 0 #9fd574 inset;
+    -ms-box-shadow: 0 1px 0 0 #9fd574 inset;
+    -o-box-shadow: 0 1px 0 0 #9fd574 inset;
+    color: white;
+}
+
+button.cancel {
+    background-color: #b1181b;
+    background: -webkit-gradient(linear, left top, left bottom, from(#b1322e), to(#912021));
+    background: -webkit-linear-gradient(top, #b1322e, #912021);
+    background: -moz-linear-gradient(top, #b1322e, #912021);
+    background: -ms-linear-gradient(top, #b1322e, #912021);
+    background: -o-linear-gradient(top, #b1322e, #912021);
+    background: linear-gradient(top, #b1322e, #912021);
+    border: 1px solid #91030a;
+    border-bottom: 1px solid #91030A;
+    text-shadow: 0 -1px 0 #953c31;
+
+    box-shadow: inset 0 1px 0 0 #d56e57;
+    -webkit-box-shadow: 0 1px 0 0 #D56E57 inset ;
+    -moz-box-shadow: 0 1px 0 0 #D56E57 inset;
+    -ms-box-shadow: 0 1px 0 0 #D56E57 inset;
+    -o-box-shadow: 0 1px 0 0 #D56E57 inset;
+    color: white;
+}
+button.submit, button.cancel  {
+
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    font-weight: bold;
+    padding: 6px 20px;
+    text-align: center;
+
+}
+button.submit:hover, button.cancel:hover {
+    opacity:.85;
+    cursor: pointer;
+}
+button.submit:active {
+    border: 1px solid #20911e;
+    box-shadow: 0 0 10px 5px #356b0b inset;
+    -webkit-box-shadow:0 0 10px 5px #356b0b inset ;
+    -moz-box-shadow: 0 0 10px 5px #356b0b inset;
+    -ms-box-shadow: 0 0 10px 5px #356b0b inset;
+    -o-box-shadow: 0 0 10px 5px #356b0b inset;
+
+}
+/* input form styles end */
+
 #map {
-    /*background-image: url('/static/img/PR_Draft_PR_Map.png');*/
-    /*-webkit-background-size: cover;*/
-    /*-o-background-size: cover;*/
-    /*background-size: cover;*/
     margin: 0 auto;
     width: 100%;
-    height: 500px;
     padding-top: 2em;
 }
 
@@ -146,16 +336,11 @@ ul.footer-links li:hover{
     color: rgba(246,246,246,1);
     height: 1.5em;
     background-color: rgba(72,91,210,1);
-    /*margin: 3px 0;*/
     padding: 3px 0;
 }
 .town-name {
     margin: 1.5em 2.5em;
 }
-/*.tiles {*/
-    /*margin: 1em 3em 1em 3em;*/
-
-/*}*/
 
 .video-container {
     margin: 1.5em auto;
@@ -168,5 +353,11 @@ ul.footer-links li:hover{
     margin: 0 auto;
     float: left;
 }
-
+.flashes {
+    margin: 0 auto;
+    text-align: center;
+}
+.flashes li {
+    list-style: none;
+}
 /* videos.html end */

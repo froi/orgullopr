@@ -10,26 +10,33 @@
         <div class="video-header">
             <span class="town-name">{{ municipio }}</span>
         </div>
-        <div class="video-container">
-            {% for video in videos %}
-                <div class="item">
-                    <iframe width="200" height="100" src="{{ video.youtube_link }}" frameborder="0" allowfullscreen></iframe>
-                    <div class="video-name"> {{ video.name }} </div>
-                </div>
-            {% endfor %}
-        </div>
+        {% if videos and len(videos) %}
+            <div class="video-container">
+
+                {% for video in videos %}
+                    <div class="item">
+                        <iframe width="200" height="100" src="{{ video.youtube_link }}" frameborder="0" allowfullscreen></iframe>
+                        <div class="video-name"> {{ video.name }} </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        {% endif %}
     </div>
     <script>
 
         orgullopr.init();
 
         $('document').ready(function(){
-{#           $('.tiles').AwesomeGrid({#}
-{#               rowSpacing: 10,#}
-{#               colSpacing: 10,#}
-{#               item:'div',#}
-{#               columns: 4#}
-{#           });#}
 
             var msnry = new Masonry($('.video-container')[0], {
                 itemSelector: '.item',

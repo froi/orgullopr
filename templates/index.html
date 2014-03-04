@@ -8,13 +8,14 @@
     <div class="content-wrapper" xmlns="http://www.w3.org/1999/html">
         <div class="map-wrapper">
             <div id="map">
-                <h1>PUERTO<img src="{{ url_for('static', filename='img/Sun.png') }}"> RICO</h1>
+                <h1>PUERTO<img src="{{ url_for('static', filename='img/Sun.png') }}">&nbsp;RICO</h1>
             </div>
         </div>
         <div class="text-wrapper">
             <div class="question">
                 <h1>&iquest;Qu&eacute es OrgulloPR&quest;</h1>
                 <p>Orgullo PR es un proyecto para resaltar lo bueno de todo Puerto Rico. La diferencia es que aqui <strong>TU</strong> eres el que nos dice que es el Orgullo de Puerto Rico.</p>
+                <p>Para ver los videos de un municipio en especifico seleccionelo en el mapa de la parte superior.</p>
             </div>
             <div class="about">
                 <h1>Envianos tu historia</h1>
@@ -29,14 +30,71 @@
                 <li> Recuerdas alguna iniciativa de gobierno, local o nacional, pasada o presente que te haya enorgullecido? </li>
                 </ul>
             </div>
-        </div>
-        <div class="button-wrapper">
-
+            <div class="button-wrapper">
+                <a class="btn"><span>ENVIANOS TU HISTORIA</span></a>
+            </div>
+            <div class="form-wrapper">
+                <form action="/add" method="post" class="input-form" name="input-form">
+                    <fieldset>
+                        <legend>Entre su informaci&oacute;n</legend>
+                        <ul>
+                            <li>
+                                <label for="name">Nombre:</label>
+                                <input type="text" id="name" name="name" placeholder="Entre su nombre" required="true"/>
+                            </li>
+                            <li>
+                                <label for="prof">Profesi&oacute;n:</label>
+                                <input type="text" id="prof" placeholder="Entre su profesi&oacute;n" required="true"/>
+                            </li>
+                            <li>
+                                <label for="town">Municipio:</label>
+                                <select id="town" name="town" required="true">
+                                    <option value="">Seleccione uno...</option>
+                                    {% for town in towns %}
+                                        <option value="{{ town.id }}">{{ town.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </li>
+                            <li>
+                                <label for="pridein">&iquest;Qu&eacute; te orgullese&quest;</label>
+                                <textarea id="pridein" name="pridein" cols="50" rows="6" ></textarea>
+                            </li>
+                            <li>
+                                <label for="prideof">&iquest;Qu&eacute; has hecho para que esten orgullosos de t&iacute;&quest;</label>
+                                <textarea id="prideof" name="prideof" cols="50" rows="6" ></textarea>
+                            </li>
+                            <li>
+                                <label for="pridegov">&iquest;Qu&eacute; iniciativa de gobierno te enorgulleci&oacute;&quest;</label>
+                                <textarea id="pridegov" name="pridegov" cols="50" rows="6" ></textarea>
+                            </li>
+                            <li>
+                                <label for="youtubelink">Enlace a su video</label>
+                                <input id="youtubelink" name="youtubelink" type="text" placeholder="Entre el url de su video de Youtube" >
+                            </li>
+                            <li>
+                                <button type="submit" class="submit">Someter</button>
+                                <button type="reset" class="cancel">Cancelar</button>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </form>
+            </div>
         </div>
 	</div>
 
   	<script type = 'text/javascript'>
     	orgullopr.init();
     	mapOperator.init();
+        $('document').ready(function() {
+            $('.btn').click(function () {
+                $('.form-wrapper').show();
+                $('.button-wrapper').hide();
+            });
+
+            $('button.cancel').click(function() {
+                $('.form-wrapper').hide();
+                $('.button-wrapper').show();
+            });
+        });
   	</script>
 {% endblock %}
