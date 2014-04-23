@@ -8,17 +8,28 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.secret_key = "a"
 
+def parse_mongodb_url():
+  mongodb_url = os.environ.get('MONGOHQ_URL','mongodb://localhost:27017/orgullopr')
+  parsed_url = urlparse(mongodb_url)
+
+  return {
+    'host': parsed_url.hostname,
+    'port': int(parsed_url.port),
+    'username': parsed_url.username,
+    'password': parsed_url.password,
+    'database': parsed_url.path[1:]
+  }
+
+parsed_mongodb_url = parse_mongodb_url()
+
 app.config.update(dict(
-    MONGODB_HOST=os.environ.get('MONGOHQ_URL','localhost'),
-    # MONGODB_PORT=27017,
     DEBUG=True,
 ))
 
 app.config.from_envvar('ORGULLOPR_SETTINGS', silent=True)
 
-
 class Testimonial(Document):
-    __database__ = 'orgullopr'
+    __database__ = parsed_mongodb_url['database']
     __collection__ = 'testimonials'
     structure = {
         'name': unicode,
@@ -35,7 +46,7 @@ class Testimonial(Document):
 
 
 class Town(Document):
-    __database__ = 'orgullopr'
+    __database__ = parsed_mongodb_url['database']
     __collection__ = 'towns'
     structure = {
         'id': int,
@@ -56,7 +67,18 @@ def dict_factory(cursor, row):
 
 def connect_mongo_db():
     """Connecto to a mongodb database."""
-    return Connection(app.config['MONGODB_HOST']) #, app.config['MONGODB_PORT'])
+    host = parsed_mongodb_url['host']
+    port = parsed_mongodb_url['port']
+    database = parsed_mongodb_url['database']
+    username = parsed_mongodb_url['username']
+    password = parsed_mongodb_url['password']
+
+    connection = Connection(host, port)
+
+    if username and password:
+      connection[database].authenticate(username, password)
+
+    return connection
 
 
 def get_db():
@@ -196,7 +218,7 @@ def add_entry():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
     url_for('static', filename='geotiles/pueblos.json')
     url_for('static', filename='geotiles/barrios.json')
     url_for('static', filename='geotiles/barrios+isla.json')
