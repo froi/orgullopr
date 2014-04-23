@@ -8,15 +8,15 @@
 
     <div class="videos-content">
         <div class="video-header">
-            <span class="town-name">{{ municipio }}</span>
+            <span class="town-name">{{ town }}</span>
         </div>
-        {% if videos and len(videos) %}
+        {% if videos %}
             <div class="video-container">
 
                 {% for video in videos %}
                     <div class="item">
-                        <iframe width="200" height="100" src="{{ video.youtube_link }}" frameborder="0" allowfullscreen></iframe>
-                        <div class="video-name"> {{ video.name }} </div>
+                        <iframe width="200" height="100" src="//www.youtube.com/embed/{{ video.youtube_link }}" frameborder="0" allowfullscreen></iframe>
+                        <div> <span class="video-name">{{ video.name }} </span></div>
                     </div>
                 {% endfor %}
             </div>
@@ -32,6 +32,11 @@
             {% endwith %}
         {% endif %}
     </div>
+
+    {% block scripts %}
+        {{ super() }}
+    {% endblock %}
+
     <script>
 
         orgullopr.init();
@@ -49,6 +54,11 @@
                     position: 'relative'
                 }
             });
+
+{#            $('.video-link').ytchromeless({#}
+{#                videoWidth: '200',#}
+{#                videoHeight: '100'#}
+{#            });#}
         });
 
     </script>

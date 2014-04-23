@@ -20,19 +20,6 @@
             <link rel="stylesheet" href="{{ url_for('static', filename='css/orgullopr.css') }}">
             <link href="http://fonts.googleapis.com/css?family=Capriola" rel="stylesheet" type="text/css" />
             <link href='http://fonts.googleapis.com/css?family=Open+Sans:800,400,300,600,700' rel='stylesheet' type='text/css'>
-
-	        <script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2.min.js') }}"></script>
-
-		    <script src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
-{#		    <script src="{{ url_for('static', filename='js/vendor/awesome-grid.min.js') }}"></script>#}
-            <script src="{{ url_for('static', filename='js/vendor/masonry.pkgd.min.js') }}"></script>
-
-		    <script src="{{ url_for('static', filename='js/vendor/d3.js') }}"></script>
-		    <script src="{{ url_for('static', filename='js/vendor/klass.js') }}"></script>
-		    <script src="{{ url_for('static', filename='js/vendor/atlaspr.js') }}"></script>
-
-		    <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
-		    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 		{% endblock %}
     </head>
     <body>
@@ -40,11 +27,11 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <header>
-            <div class="nav-sun"></div>
+            <div class="nav-sun"></div><div class="header-title"><a href="/">OrgulloPR</a></div>
             <nav>
                 <ul class="nav-menu">
                     <li><a href="#" ><span class="menu-text">SOBRE</span></a></li>
-                    <li><a href="#"><span class="menu-text">ENVIANOS TU HISTORIA</span></a></li>
+                    <li><a href="#send-story" class="send-story"><span class="menu-text">ENVIANOS TU HISTORIA</span></a></li>
                     <li><a href="#"><span class="menu-text">EXPLORA</span></a></li>
                 </ul>
 
@@ -58,15 +45,28 @@
                 <li><a href="#">PRESS</a></li>
             </ul>
 		</footer>
+        {% block scripts %}
+            <script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2.min.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/vendor/masonry.pkgd.min.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/vendor/swfobject.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/vendor/jquery.ytchromeless.js') }}"></script>
 
+            <script src="{{ url_for('static', filename='js/vendor/d3.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/vendor/klass.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/vendor/atlaspr.js') }}"></script>
+
+            <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+        {% endblock %}
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
-            // (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            // function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            // e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            // e.src='//www.google-analytics.com/analytics.js';
-            // r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            // ga('create','UA-XXXXX-X');ga('send','pageview');
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
         </script>
     </body>
 </html>

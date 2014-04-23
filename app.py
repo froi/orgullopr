@@ -1,17 +1,46 @@
-import sqlite3
-import json
-import os
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+from flask import Flask, request, g, redirect, url_for, render_template, flash
+from datetime import datetime
+from mongokit import Connection, Document
+from urlparse import urlparse, parse_qs
 
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.secret_key="a"
+app.secret_key = "a"
 
 app.config.update(dict(
-    DATABASE=os.path.join(app.root_path, 'orgullopr.db'),
+    MONGODB_HOST='localhost',
+    MONGODB_PORT=27017,
     DEBUG=True,
 ))
+
 app.config.from_envvar('ORGULLOPR_SETTINGS', silent=True)
+
+
+class Testimonial(Document):
+    __database__ = 'orgullopr'
+    __collection__ = 'testimonials'
+    structure = {
+        'name': unicode,
+        'prof': unicode,
+        'town': unicode,
+        'pride_in': unicode,
+        'pride_of': unicode,
+        'pride_gov': unicode,
+        'youtube_vid_id': unicode,
+        'created_date': datetime
+    }
+    required_fields = ['name', 'town', 'pride_in', 'pride_of', 'pride_gov']
+    default_values = {'created_date': datetime.utcnow}
+
+
+class Town(Document):
+    __database__ = 'orgullopr'
+    __collection__ = 'towns'
+    structure = {
+        'id': int,
+        'name': unicode
+    }
+    required_fields = ['id', 'name']
 
 
 def dict_factory(cursor, row):
@@ -24,11 +53,9 @@ def dict_factory(cursor, row):
     return d
 
 
-def connect_db():
-    """Connects to the specific database."""
-    rv = sqlite3.connect(app.config['DATABASE'])
-    rv.row_factory = dict_factory
-    return rv
+def connect_mongo_db():
+    """Connecto to a mongodb database."""
+    return Connection(app.config['MONGODB_HOST'], app.config['MONGODB_PORT'])
 
 
 # TODO: set this up in a seperate setup.py file or something
@@ -55,10 +82,24 @@ def get_db():
     """
     Opens a new database connection if there is none yet for the current application context.
     """
+    if not hasattr(g, 'mongo_db'):
+        g.db = get_mongo_db()
 
-    if not hasattr(g, 'sqlite_db'):
-        g.sqlite_db = connect_db()
-    return g.sqlite_db
+    return g.db
+
+
+def get_mongo_db():
+    """
+    Opens a new mongodb connection if there isn't one for the current application context.
+    """
+
+    if not hasattr(g, 'mongodb'):
+        g.mongodb = connect_mongo_db()
+
+    g.mongodb.register([Testimonial])
+    g.mongodb.register([Town])
+
+    return g.mongodb
 
 
 def run_query(query, bindings=None):
@@ -69,15 +110,49 @@ def run_query(query, bindings=None):
         cur = db.execute(query)
     return cur.fetchall()
 
+def get_towns():
+    db = get_db()
+
+    return db.Town.find()
+
+def get_town_videos(town=0):
+    db = get_db()
+    if town:
+        return db.Testimonial.find({'town': town})
+    else:
+        return db.Testimonial.find()
+
 
 def load_towns():
     """
     Loads into session all towns (municipios) in PR
     """
     if not hasattr(g, 'towns'):
-        g.towns = run_query('select id, name from municipios')
+        #g.towns = run_query('select id, name from municipios')
+        g.towns = get_towns()
     return g.towns
 
+def video_id(value):
+    """
+    Examples:
+    - http://youtu.be/SA2iWivDJiE
+    - http://www.youtube.com/watch?v=_oPAwA_Udwc&feature=feedu
+    - http://www.youtube.com/embed/SA2iWivDJiE
+    - http://www.youtube.com/v/SA2iWivDJiE?version=3&amp;hl=en_US
+    """
+    query = urlparse(value)
+    if query.hostname == 'youtu.be':
+        return query.path[1:]
+    if query.hostname in ('www.youtube.com', 'youtube.com'):
+        if query.path == '/watch':
+            p = parse_qs(query.query)
+            return p['v'][0]
+        if query.path[:7] == '/embed/':
+            return query.path.split('/')[2]
+        if query.path[:3] == '/v/':
+            return query.path.split('/')[2]
+    # fail?
+    return None
 
 @app.teardown_appcontext
 def close_db(error):
@@ -86,7 +161,7 @@ def close_db(error):
     """
 
     if hasattr(g, "sqlite_db"):
-        g.sqlite_db.close
+        g.sqlite_db.close()
 
 
 @app.route('/')
@@ -100,30 +175,41 @@ def show_videos():
     return render_template('videos.html')
 
 
-@app.route('/videos/<municipio>', methods=['GET'])
-def get_videos(municipio):
+@app.route('/videos/<town>', methods=['GET'])
+def get_videos(town):
     """
     Get all videos from specified city and renders them in the videos view.
     """
 
     db = get_db()
-    # cur = db.execute('select name, youtube_link from testimonials where town=?', [municipio])
-    entries = run_query('select name, youtube_link from testimonials where town=?', [municipio])
 
-    if entries and len(entries):
-        return render_template('videos.html', videos=entries, municipio=municipio)
+    entries = get_town_videos(town)
+
+    print entries
+
+    if entries:
+        return render_template('videos.html', videos=entries, town=town)
     else:
         flash('No se encontraron videos.')
-        return render_template('videos.html', municipio=municipio)
+        return render_template('videos.html', town=town)
+
 
 @app.route('/add', methods=['POST'])
 def add_entry():
     db = get_db()
-    print request.form
-    # db.execute('INSERT INTO entries (name, town, proud_of, pride_in, youtube_link) VALUES(?,?,?,?,?)',
-    #            [request.form['name'], request.form['prof'], request.form['town'], request.form['proudof'],
-    #             request.form['pridein'], request.form['pridegov'], request.form['youtubelink']])
-    # db.commit()
+
+    testimonials = db.Testimonial()
+
+    testimonials['name'] = request.form['name']
+    testimonials['prof'] = request.form['prof']
+    testimonials['town'] = request.form['town']
+    testimonials['pride_in'] = request.form['pride_in']
+    testimonials['pride_of'] = request.form['pride_of']
+    testimonials['pride_gov'] = request.form['pride_gov']
+    testimonials['youtube_vid_id'] = video_id(request.form['youtube_link'])
+
+    testimonials.save()
+
     flash('New entry was successfully posted')
     return redirect(url_for('index'))
 

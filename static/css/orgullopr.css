@@ -23,9 +23,33 @@ div.video {
     background-color: black;
 
 }
+.header-title {
+    display: table;
+    float: left;
+    height: 3.5em;
+}
+.header-title a{
+    text-decoration: none;
+    color: rgba(255, 255, 106, 1);
+    display: table-cell;
+    vertical-align: middle;
+    font-family: "Open Sans" sans-serif;
+    font-weight: 700;
+    font-size: xx-large;
+
+}
 .wrapper {
     margin: 0;
     padding: 0;
+}
+.name-wrapper {
+  margin: 0 auto;
+  text-align: center;
+  color: rgba(253,253,87,1);
+  padding: 0 0 15px 0;
+  font-family: "Open Sans" sans-serif;
+  font-weight: 700;
+  font-size: x-large;
 }
 #map{
     margin: 0 auto;
@@ -348,10 +372,19 @@ button.submit:active {
     text-align: center;
 }
 
-.items {
-    width: 8em;
+.item {
+    /*width: 8em;
     margin: 0 auto;
-    float: left;
+    float: left;*/
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 3px;
+    background: rgba(89, 190, 242, 1);
+}
+.video-name {
+    color: rgba(255, 255, 255, 1);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
 }
 .flashes {
     margin: 0 auto;

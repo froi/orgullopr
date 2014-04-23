@@ -10,6 +10,9 @@
             <div id="map">
                 <h1>PUERTO<img src="{{ url_for('static', filename='img/Sun.png') }}">&nbsp;RICO</h1>
             </div>
+						<div class="name-wrapper">
+							<span id="name"></span>
+						</div>
         </div>
         <div class="text-wrapper">
             <div class="question">
@@ -34,6 +37,7 @@
                 <a class="btn"><span>ENVIANOS TU HISTORIA</span></a>
             </div>
             <div class="form-wrapper">
+							<a name="send-story">
                 <form action="/add" method="post" class="input-form" name="input-form">
                     <fieldset>
                         <legend>Entre su informaci&oacute;n</legend>
@@ -44,32 +48,32 @@
                             </li>
                             <li>
                                 <label for="prof">Profesi&oacute;n:</label>
-                                <input type="text" id="prof" placeholder="Entre su profesi&oacute;n" required="true"/>
+                                <input type="text" id="prof" name="prof" placeholder="Entre su profesi&oacute;n" required="true"/>
                             </li>
                             <li>
                                 <label for="town">Municipio:</label>
                                 <select id="town" name="town" required="true">
                                     <option value="">Seleccione uno...</option>
                                     {% for town in towns %}
-                                        <option value="{{ town.id }}">{{ town.name }}</option>
+                                        <option value="{{ town.name }}">{{ town.name }}</option>
                                     {% endfor %}
                                 </select>
                             </li>
                             <li>
                                 <label for="pridein">&iquest;Qu&eacute; te orgullese&quest;</label>
-                                <textarea id="pridein" name="pridein" cols="50" rows="6" ></textarea>
+                                <textarea id="pride_in" name="pride_in" cols="50" rows="6" ></textarea>
                             </li>
                             <li>
                                 <label for="prideof">&iquest;Qu&eacute; has hecho para que esten orgullosos de t&iacute;&quest;</label>
-                                <textarea id="prideof" name="prideof" cols="50" rows="6" ></textarea>
+                                <textarea id="pride_of" name="pride_of" cols="50" rows="6" ></textarea>
                             </li>
                             <li>
                                 <label for="pridegov">&iquest;Qu&eacute; iniciativa de gobierno te enorgulleci&oacute;&quest;</label>
-                                <textarea id="pridegov" name="pridegov" cols="50" rows="6" ></textarea>
+                                <textarea id="pride_gov" name="pride_gov" cols="50" rows="6" ></textarea>
                             </li>
                             <li>
                                 <label for="youtubelink">Enlace a su video</label>
-                                <input id="youtubelink" name="youtubelink" type="text" placeholder="Entre el url de su video de Youtube" >
+                                <input id="youtube_link" name="youtube_link" type="text" placeholder="Entre el url de su video de Youtube" >
                             </li>
                             <li>
                                 <button type="submit" class="submit">Someter</button>
@@ -78,23 +82,28 @@
                         </ul>
                     </fieldset>
                 </form>
+							</a>
             </div>
         </div>
 	</div>
-
+    {% block scripts %}
+        {{ super() }}
+    {% endblock %}
   	<script type = 'text/javascript'>
-    	orgullopr.init();
-    	mapOperator.init();
-        $('document').ready(function() {
-            $('.btn').click(function () {
-                $('.form-wrapper').show();
-                $('.button-wrapper').hide();
-            });
 
-            $('button.cancel').click(function() {
-                $('.form-wrapper').hide();
-                $('.button-wrapper').show();
-            });
+      $('document').ready(function() {
+				orgullopr.init();
+				mapOperator.init();
+
+      	$('.btn').click(function () {
+        	orgullopr.showForm();
         });
+				$('.send-story').click(function () {
+					orgullopr.showForm();
+				});
+        $('button.cancel').click(function() {
+        	orgullopr.hideForm();
+        });
+      });
   	</script>
 {% endblock %}
