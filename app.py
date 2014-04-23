@@ -8,8 +8,8 @@ app.config.from_object(__name__)
 app.secret_key = "a"
 
 app.config.update(dict(
-    MONGODB_HOST='localhost',
-    MONGODB_PORT=27017,
+    MONGODB_HOST=os.environ.get('MONGOHQ_URL','localhost'),
+    # MONGODB_PORT=27017,
     DEBUG=True,
 ))
 
@@ -55,27 +55,7 @@ def dict_factory(cursor, row):
 
 def connect_mongo_db():
     """Connecto to a mongodb database."""
-    return Connection(app.config['MONGODB_HOST'], app.config['MONGODB_PORT'])
-
-
-# TODO: set this up in a seperate setup.py file or something
-def init_db():
-    """
-    Initializes the application database
-    """
-
-    with app.app_context():
-        db = get_db()
-
-        # Create development DB
-        with app.open_resource('orgullopr.sql', mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
-
-        # Execute development dummy data
-        with app.open_resource('inserts.sql', mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
+    return Connection(app.config['MONGODB_HOST']) #, app.config['MONGODB_PORT'])
 
 
 def get_db():
@@ -215,7 +195,7 @@ def add_entry():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
     url_for('static', filename='geotiles/pueblos.json')
     url_for('static', filename='geotiles/barrios.json')
     url_for('static', filename='geotiles/barrios+isla.json')
