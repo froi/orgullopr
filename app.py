@@ -2,6 +2,7 @@ from flask import Flask, request, g, redirect, url_for, render_template, flash
 from datetime import datetime
 from mongokit import Connection, Document
 from urlparse import urlparse, parse_qs
+import os
 
 app = Flask(__name__)
 app.config.from_object(__name__)
