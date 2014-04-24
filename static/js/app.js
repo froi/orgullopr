@@ -17,7 +17,6 @@ var mapOperator = {
     puertoRico: {},
     pueblos: {},
     tooltip: {},
-    youTubeAPIKey: '{{ youTubeAPIKey }}', // TODO: eliminate when dev if finished
     init: function() {
 			this.tooltip = d3.select('#map').append('div').attr('class', 'tooltip');
 			var config = {

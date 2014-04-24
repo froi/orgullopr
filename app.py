@@ -8,17 +8,19 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.secret_key = "a"
 
-def parse_mongodb_url():
-  mongodb_url = os.environ.get('MONGOHQ_URL','mongodb://localhost:27017/orgullopr')
-  parsed_url = urlparse(mongodb_url)
 
-  return {
-    'host': parsed_url.hostname,
-    'port': int(parsed_url.port),
-    'username': parsed_url.username,
-    'password': parsed_url.password,
-    'database': parsed_url.path[1:]
-  }
+def parse_mongodb_url():
+    mongodb_url = os.environ.get(
+        'MONGOHQ_URL', 'mongodb://localhost:27017/orgullopr')
+    parsed_url = urlparse(mongodb_url)
+
+    return {
+        'host': parsed_url.hostname,
+        'port': int(parsed_url.port),
+        'username': parsed_url.username,
+        'password': parsed_url.password,
+        'database': parsed_url.path[1:]
+    }
 
 parsed_mongodb_url = parse_mongodb_url()
 
@@ -27,6 +29,7 @@ app.config.update(dict(
 ))
 
 app.config.from_envvar('ORGULLOPR_SETTINGS', silent=True)
+
 
 class Testimonial(Document):
     __database__ = parsed_mongodb_url['database']
@@ -57,7 +60,8 @@ class Town(Document):
 
 def dict_factory(cursor, row):
     """
-    Used to substitute the sqlite.Row factory. This is done to avoid the tuple output from sqlite.Row.
+    Used to substitute the sqlite.Row factory. This is done to avoid the tuple
+    output from sqlite.Row.
     """
     d = {}
     for idx, col in enumerate(cursor.description):
@@ -76,14 +80,15 @@ def connect_mongo_db():
     connection = Connection(host, port)
 
     if username and password:
-      connection[database].authenticate(username, password)
+        connection[database].authenticate(username, password)
 
     return connection
 
 
 def get_db():
     """
-    Opens a new database connection if there is none yet for the current application context.
+    Opens a new database connection if there is none yet for the current
+    application context.
     """
     if not hasattr(g, 'mongo_db'):
         g.db = get_mongo_db()
@@ -93,7 +98,8 @@ def get_db():
 
 def get_mongo_db():
     """
-    Opens a new mongodb connection if there isn't one for the current application context.
+    Opens a new mongodb connection if there isn't one for the current
+    application context.
     """
 
     if not hasattr(g, 'mongodb'):
@@ -113,10 +119,12 @@ def run_query(query, bindings=None):
         cur = db.execute(query)
     return cur.fetchall()
 
+
 def get_towns():
     db = get_db()
 
     return db.Town.find()
+
 
 def get_town_videos(town=0):
     db = get_db()
@@ -134,6 +142,7 @@ def load_towns():
         #g.towns = run_query('select id, name from municipios')
         g.towns = get_towns()
     return g.towns
+
 
 def video_id(value):
     """
@@ -156,6 +165,7 @@ def video_id(value):
             return query.path.split('/')[2]
     # fail?
     return None
+
 
 @app.teardown_appcontext
 def close_db(error):
@@ -183,8 +193,6 @@ def get_videos(town):
     """
     Get all videos from specified city and renders them in the videos view.
     """
-
-    db = get_db()
 
     entries = get_town_videos(town)
 
