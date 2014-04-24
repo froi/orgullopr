@@ -66,7 +66,7 @@ div.video {
 }
 ul.nav-menu, ul.footer-links {
     font-family: "Open Sans", sans-serif;
-    font-weight: 800;
+    font-weight: 700;
     height: 3.5em;
     padding: 0;
     margin: 0;
@@ -78,9 +78,6 @@ ul.nav-menu li {
     height: inherit;
     display: inline-table;
     padding: 0 5px;
-    -webkit-border-radius: 5px 5px 0 0;
-    -moz-border-radius: 5px 5px 0 0;
-    border-radius: 5px 5px 0 0;
 }
 ul.nav-menu li:hover {
     background-color: rgba(72,91,210,1);
@@ -114,9 +111,6 @@ ul.footer-links li a {
 ul.footer-links li:hover{
     background-color: rgba(246,246,246,1);
     color: rgba(203,203,203,1);
-    -webkit-border-radius: 0 0 5px 5px;
-    -moz-border-radius: 0 0 5px 5px;
-    border-radius: 0 0 5px 5px;
 }
 .menu-text {
     color: #ffffff;
