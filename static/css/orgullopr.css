@@ -123,6 +123,7 @@ ul.footer-links li:hover{
 }
 .map-wrapper {
     background-color: rgba(72,91,210,1);
+    min-height: 550px;
 }
 .text-wrapper {
     background-color: rgba(247,247,247,1);
