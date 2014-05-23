@@ -50,6 +50,7 @@ div.video {
   font-family: "Open Sans" sans-serif;
   font-weight: 700;
   font-size: x-large;
+  height: 1.5em;
 }
 #map{
     margin: 0 auto;
