@@ -26,7 +26,7 @@ div.video {
 .header-title {
     display: table;
     float: left;
-    height: 3.5em;
+    height: 4em;
 }
 .header-title a{
     text-decoration: none;
@@ -59,7 +59,7 @@ div.video {
 }
 .nav-sun {
     float: left;
-    height: 3.5em;
+    height: 4em;
     width: 60px;
     background: url("/static/img/Sun.png");
     background-size: cover;
@@ -68,7 +68,7 @@ div.video {
 ul.nav-menu, ul.footer-links {
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
-    height: 3.5em;
+    height: 4em;
     padding: 0;
     margin: 0;
 }
